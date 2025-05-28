@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 24.8.6.2 (Windows)"/>
+	<meta name="created" content="2025-05-27T22:02:49.264000000"/>
+	<meta name="changed" content="2025-05-27T22:03:02.132000000"/>
+</head>
+<body lang="es-US" dir="ltr"><p>&lt;!DOCTYPE html&gt;</p>
+<p>&lt;html lang=&quot;es&quot;&gt;</p>
+<p>&lt;head&gt;</p>
+<p>  &lt;meta charset=&quot;UTF-8&quot;&gt;</p>
+<p>  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
+initial-scale=1.0&quot;&gt;</p>
+<p>  &lt;title&gt;Remesas Seguras&lt;/title&gt;</p>
+<p>  &lt;link
+href=&quot;https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css&quot;
+rel=&quot;stylesheet&quot;&gt;</p>
+<p>&lt;/head&gt;</p>
+<p>&lt;body class=&quot;bg-gray-100 min-h-screen flex items-center
+justify-center&quot;&gt;</p>
+<p>  &lt;div id=&quot;app&quot; class=&quot;w-full max-w-md bg-white
+shadow-md p-6 rounded-xl&quot;&gt;</p>
+<p>    &lt;h1 class=&quot;text-xl font-bold text-center mb-4&quot;&gt;Remesas
+Seguras&lt;/h1&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div id=&quot;auth-section&quot;&gt;</p>
+<p>      &lt;input id=&quot;email&quot; type=&quot;email&quot;
+placeholder=&quot;Correo&quot; class=&quot;mb-2 w-full border p-2
+rounded&quot; /&gt;</p>
+<p>      &lt;input id=&quot;password&quot; type=&quot;password&quot;
+placeholder=&quot;Contraseña&quot; class=&quot;mb-2 w-full border
+p-2 rounded&quot; /&gt;</p>
+<p>      &lt;button onclick=&quot;signUp()&quot; class=&quot;w-full
+bg-blue-500 text-white p-2 rounded mb-2&quot;&gt;Registrarse&lt;/button&gt;</p>
+<p>      &lt;button onclick=&quot;signIn()&quot; class=&quot;w-full
+bg-green-500 text-white p-2 rounded&quot;&gt;Iniciar Sesión&lt;/button&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div id=&quot;form-section&quot; class=&quot;hidden&quot;&gt;</p>
+<p>      &lt;p class=&quot;mb-4 text-sm text-gray-600&quot;&gt;Formulario
+de envío&lt;/p&gt;</p>
+<p>      &lt;input id=&quot;nombre&quot; placeholder=&quot;Nombre&quot;
+class=&quot;mb-2 w-full border p-2 rounded&quot; /&gt;</p>
+<p>      &lt;input id=&quot;apellido&quot; placeholder=&quot;Apellido&quot;
+class=&quot;mb-2 w-full border p-2 rounded&quot; /&gt;</p>
+<p>      &lt;input id=&quot;monto&quot; placeholder=&quot;Monto a
+enviar (USD)&quot; type=&quot;number&quot; class=&quot;mb-2 w-full
+border p-2 rounded&quot; /&gt;</p>
+<p>      &lt;input id=&quot;destino&quot; placeholder=&quot;Destino&quot;
+class=&quot;mb-2 w-full border p-2 rounded&quot; /&gt;</p>
+<p>      &lt;button onclick=&quot;enviarFormulario()&quot;
+class=&quot;w-full bg-purple-500 text-white p-2
+rounded&quot;&gt;Enviar&lt;/button&gt;</p>
+<p>      &lt;button onclick=&quot;logout()&quot; class=&quot;w-full
+bg-red-400 text-white p-2 rounded mt-4&quot;&gt;Cerrar
+sesión&lt;/button&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p>  &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  &lt;script
+src=&quot;https://unpkg.com/@supabase/supabase-js&quot;&gt;&lt;/script&gt;</p>
+<p>  &lt;script&gt;</p>
+<p>    const supabaseUrl = 'https://[TU_SUPABASE_URL].supabase.co'</p>
+<p>    const supabaseKey = '[TU_SUPABASE_ANON_KEY]'</p>
+<p>    const supabase = supabase.createClient(supabaseUrl,
+supabaseKey)</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    async function signUp() {</p>
+<p>      const email = document.getElementById('email').value</p>
+<p>      const password = document.getElementById('password').value</p>
+<p>      const { error } = await supabase.auth.signUp({ email,
+password })</p>
+<p>      if (error) return alert(error.message)</p>
+<p>      alert('Registrado. Revisa tu correo para confirmar.')</p>
+<p>    }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    async function signIn() {</p>
+<p>      const email = document.getElementById('email').value</p>
+<p>      const password = document.getElementById('password').value</p>
+<p>      const { data, error } = await
+supabase.auth.signInWithPassword({ email, password })</p>
+<p>      if (error) return alert(error.message)</p>
+<p>     
+document.getElementById('auth-section').classList.add('hidden')</p>
+<p>     
+document.getElementById('form-section').classList.remove('hidden')</p>
+<p>    }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    async function enviarFormulario() {</p>
+<p>      const nombre = document.getElementById('nombre').value</p>
+<p>      const apellido = document.getElementById('apellido').value</p>
+<p>      const monto = document.getElementById('monto').value</p>
+<p>      const destino = document.getElementById('destino').value</p>
+<p>      const { error } = await supabase.from('remesas').insert([{
+nombre, apellido, monto, destino }])</p>
+<p>      if (error) return alert('Error al enviar: ' + error.message)</p>
+<p>      alert('Formulario enviado correctamente')</p>
+<p>    }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    async function logout() {</p>
+<p>      await supabase.auth.signOut()</p>
+<p>     
+document.getElementById('form-section').classList.add('hidden')</p>
+<p>     
+document.getElementById('auth-section').classList.remove('hidden')</p>
+<p>    }</p>
+<p>  &lt;/script&gt;</p>
+<p>&lt;/body&gt;</p>
+<p>&lt;/html&gt;</p>
+</body>
+</html>
